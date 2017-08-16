@@ -1,0 +1,59 @@
+{
+        "example":
+        {
+		"spec_version": "1.0",
+                "scope": [ "sourcetype", "host", "user", "session" ],
+                "constraints": { "sourcetype": "linux:audit", "type": "USER_LOGIN" },
+
+                "states":
+                {
+                        "start":
+                        {
+                                "transitions":
+                                {
+                                        "crash":
+                                        {
+                                                "guard": { "type": "ANOM_ABEND" },
+                                                "transition": "process_crash"
+                                        },
+					"sniff":
+					{
+						"guard": { "type": "ANOM_PROMISCUOUS" },
+						"transition": "promiscuous"
+					},
+					"sudo":
+					{
+						"guard": { "type": "USER_CMD" },
+						"transition": "esc_priv"
+					}
+                                }
+                        },
+			"process_crash":
+			{		
+				"transitions":
+				{
+					"sniff":
+					{
+						"guard": { "type": "ANOM_PROMISCUOUS" },
+                                                "transition": "promiscuous"
+					}
+				}
+			},
+			"esc_priv":
+			{
+				"transitions":
+				{
+					"sniff":
+                                        {
+                                                "guard": { "type": "ANOM_PROMISCUOUS" },
+                                                "transition": "promiscuous"
+                                        }
+				}
+			},
+                        "promiscuous":
+                        {
+                                "transitions": {}
+                        }
+                }
+        }
+}

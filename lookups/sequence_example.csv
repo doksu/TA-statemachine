@@ -1,0 +1,8 @@
+sourcetype,host,type,user,session
+linux:audit,db01.example.co.uk,USER_LOGIN,alice,1
+linux:audit,db01.example.co.uk,USER_LOGIN,alice,2
+linux:audit,db01.example.co.uk,USER_CMD,alice,1
+linux:audit,db01.example.co.uk,TTY,alice,1
+linux:audit,db02.example.co.uk,USER_LOGIN,bob,1
+linux:audit,db01.example.co.uk,ANOM_PROMISCUOUS,alice,1
+WinEventLog:Security,web01.example.co.uk,,alice
